@@ -1,26 +1,28 @@
-#include <Arduino.h>
+#include <SPI.h>
 #include <Wire.h>
 #include <ArdusatSDK.h>
 
-ArdusatSerial serialConnection(SERIAL_MODE_HARDWARE_AND_SOFTWARE, 8, 9);
+Display display;
+int demodelay=2000;
 
-Luminosity lum;
-
-void setup(void)
-{
-  serialConnection.begin(9600);
-
-  lum.begin();
-
-  serialConnection.println("");
+void setup() {
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 }
 
-void loop(void)
-{
-
-  lum.read();
-
-  serialConnection.println(lum.toJSON("luminosity"));
-
-  delay(100);
-}
+void loop() {
+  // Clear the OLED screen
+  display.clearDisplay();
+  
+  // ------------------------------------------------------------------------------------------------
+  // drawPixel(x, y, color)
+  // Draw one single tiny pixel in the center of the display ( 128x32 pixels )
+  // ------------------------------------------------------------------------------------------------
+  display.drawPixel(2, 5, WHITE);
+  display.drawPixel(3, 6, WHITE);
+  display.drawPixel(4, 7, WHITE);
+  display.drawPixel(5, 7, WHITE);
+  display.drawPixel(6, 7, WHITE);
+  display.drawPixel(7, 7, WHITE);
+  display.drawPixel(8, 7, WHITE);
+  display.display();
+  }
